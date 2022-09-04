@@ -13,7 +13,7 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
   
   // Use the body parser middleware for post requests
   app.use(bodyParser.json());
-
+  
   // Done == @TODO1 IMPLEMENT A RESTFUL ENDPOINT 
   // Done == ET /filteredimage?image_url={{URL}}
   // endpoint to filter an image from a public url.
@@ -36,6 +36,8 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
 
     if(!image_url){
       return res.status(400).send('Please Note that the Image Url is reuired');
+      //return to escape continuaition Bug
+
     } 
     const filtered_image = await filterImageFromURL(image_url);
     res.status(200).sendFile(filtered_image, () => {deleteLocalFiles([filtered_image])});

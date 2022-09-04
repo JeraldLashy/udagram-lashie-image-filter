@@ -5,44 +5,85 @@ Udagram is a simple cloud application developed alongside the Udacity Cloud Engi
 The project is split into three parts:
 1. [The Simple Frontend](https://github.com/udacity/cloud-developer/tree/master/course-02/exercises/udacity-c2-frontend)
 A basic Ionic client web application which consumes the RestAPI Backend. [Covered in the course]
-2. [The RestAPI Backend](https://github.com/udacity/cloud-developer/tree/master/course-02/exercises/udacity-c2-restapi), a Node-Express server which can be deployed to a cloud service. [Covered in the course]
-3. [The Image Filtering Microservice](https://github.com/udacity/cloud-developer/tree/master/course-02/project/image-filter-starter-code), the final project for the course. It is a Node-Express application which runs a simple script to process images. [Your assignment]
+2. [The RestAPI Backend](https://github.com/udacity/cloud-developer/tree/master/course-02/exercises/udacity-c2-restapi), a Node-Express server which can be deployed to a cloud service. [Covered in the course] Done 
+3. [The Image Filtering Microservice](https://github.com/udacity/cloud-developer/tree/master/course-02/project/image-filter-starter-code), the final project for the course. It is a Node-Express application which runs a simple script to process images. [This Project](https://github.com/JeraldLashy/udagram-lashie-image-filter.git)
 
 ## Tasks
+The tasks to this project was achieved in following manner:
 
-### Setup Node Environment
 
-You'll need to create a new node server. Open a new terminal within the project directory and run:
+### Set Node Environment
 
-1. Initialize a new project: `npm i`
-2. run the development server with `npm run dev`
+Created a Node Server
+Opened a new terminal within the project directory and run:
+
+1.  `npm i` to Initialize a new project
+2.  `npm run dev` to run in dev mode
 
 ### Create a new endpoint in the server.ts file
 
-The starter code has a task for you to complete an endpoint in `./src/server.ts` which uses query parameter to download an image from a public URL, filter the image, and return the result.
+Completed the task in The starter code to create an endpoint in `./src/server.ts` which uses query parameter to download an image from a public URL, filter the image, and return the result.
 
-We've included a few helper functions to handle some of these concepts and we're importing it for you at the top of the `./src/server.ts`  file.
+#### Imports
 
 ```typescript
-import {filterImageFromURL, deleteLocalFiles} from './util/util';
+
+import { Router, Request, Response } from 'express';
+
 ```
 
-### Deploying your system
+#### Function TO Filter image
 
-Follow the process described in the course to `eb init` a new application and `eb create` a new environment to deploy your image-filter service! Don't forget you can use `eb deploy` to push changes.
 
-## Stand Out (Optional)
+```typescript
 
-### Refactor the course RESTapi
+app.get('/filteredImage', async(req: Request, res: Response) =>{
 
-If you're feeling up to it, refactor the course RESTapi to make a request to your newly provisioned image server.
+    const image_url = req.query.image_url.toString();
 
-### Authentication
+    if(!image_url){
+      return res.status(400).send('Please Note that the Image Url is reuired');
+      //return was used so that function does not proceed if error, exposing a bug here.
+    } 
+    const filtered_image = await filterImageFromURL(image_url);
+    res.status(200).sendFile(filtered_image, () => {deleteLocalFiles([filtered_image])});
+    });
 
-Prevent requests without valid authentication headers.
-> !!NOTE if you choose to submit this, make sure to add the token to the postman collection and export the postman collection file to your submission so we can review!
+```
 
-### Custom Domain Name
+### Deployment
 
-Add your own domain name and have it point to the running services (try adding a subdomain name to point to the processing server)
-> !NOTE: Domain names are not included in AWS’ free tier and will incur a cost.
+Elastic Bean was used
+
+`eb init`   :creates a new app
+
+Modify the .elasticbeanstalk/config.yml file to achieve the code for deployment
+
+```yml
+
+deploy:
+    artifact: ./www/Archive.zip
+
+```
+
+`eb create` : creates a  new environment for the app
+
+`eb deploy` : used to push changes after deployment from dev local.
+
+### Testing
+
+#### Before Deployment
+
+`npm run dev`  : to run in dev mode
+Use postman to test the endpoint by giving a link
+
+[See Example](http://localhost:8082/filteredimage?image_url=https://zimbabwetourism.net/wp-content/uploads/2021/10/Mukuvisi-Woodlands-3-770x550.jpg)
+(`http://localhost:8082/filteredimage?image_url=https://zimbabwetourism.net/wp-content/uploads/2021/10/Mukuvisi-Woodlands-3-770x550.jpg`)
+
+#### After Deployment
+
+Use Postman to test the endpoint of the elasticbeanstalk app deployed.
+[See Example](http://udagram-lashie-image-filter-dev.us-east-1.elasticbeanstalk.com/filteredimage?image_url=https://zimbabwetourism.net/wp-content/uploads/2021/10/Mukuvisi-Woodlands-3-770x550.jpg)
+
+(`http://udagram-lashie-image-filter-dev.us-east-1.elasticbeanstalk.com/filteredimage?image_url=https://zimbabwetourism.net/wp-content/uploads/2021/10/Mukuvisi-Woodlands-3-770x550.jpg`)
+
