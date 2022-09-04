@@ -75,13 +75,15 @@ deploy:
 #### Before Deployment
 
 `npm run dev`  : to run in dev mode
-    Use postman to test the endpoint by giving a link
-    [Example](http://localhost:8082/filteredimage?image_url=https://zimbabwetourism.net/wp-content/uploads/2021/10/Mukuvisi-Woodlands-3-770x550.jpg)
-    `http://localhost:8082/filteredimage?image_url=https://zimbabwetourism.net/wp-content/uploads/2021/10/Mukuvisi-Woodlands-3-770x550.jpg`
+Use postman to test the endpoint by giving a link
+
+[See Example](http://localhost:8082/filteredimage?image_url=https://zimbabwetourism.net/wp-content/uploads/2021/10/Mukuvisi-Woodlands-3-770x550.jpg)
+(`http://localhost:8082/filteredimage?image_url=https://zimbabwetourism.net/wp-content/uploads/2021/10/Mukuvisi-Woodlands-3-770x550.jpg`)
 
 #### After Deployment
 
 Use Postman to test the endpoint of the elasticbeanstalk app deployed.
-    [Example](http://udagram-lashie-image-filter-dev.us-east-1.elasticbeanstalk.com/filteredimage?image_url=https://zimbabwetourism.net/wp-content/uploads/2021/10/Mukuvisi-Woodlands-3-770x550.jpg)
-    `http://udagram-lashie-image-filter-dev.us-east-1.elasticbeanstalk.com/filteredimage?image_url=https://zimbabwetourism.net/wp-content/uploads/2021/10/Mukuvisi-Woodlands-3-770x550.jpg`
+[See Example](http://udagram-lashie-image-filter-dev.us-east-1.elasticbeanstalk.com/filteredimage?image_url=https://zimbabwetourism.net/wp-content/uploads/2021/10/Mukuvisi-Woodlands-3-770x550.jpg)
+
+(`http://udagram-lashie-image-filter-dev.us-east-1.elasticbeanstalk.com/filteredimage?image_url=https://zimbabwetourism.net/wp-content/uploads/2021/10/Mukuvisi-Woodlands-3-770x550.jpg`)
 
