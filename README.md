@@ -28,12 +28,15 @@ Completed the task in The starter code to create an endpoint in `./src/server.ts
 
 ```typescript
 
+import { Router, Request, Response } from 'express';
+
 ```
 
 #### Function TO Filter image
 
 
 ```typescript
+
 app.get('/filteredImage', async(req: Request, res: Response) =>{
 
     const image_url = req.query.image_url.toString();
@@ -45,33 +48,40 @@ app.get('/filteredImage', async(req: Request, res: Response) =>{
     const filtered_image = await filterImageFromURL(image_url);
     res.status(200).sendFile(filtered_image, () => {deleteLocalFiles([filtered_image])});
     });
+
 ```
 
 ### Deployment
 
 Elastic Bean was used
 
-`eb init` creates a new app
+`eb init`   :creates a new app
 
-    Modify the .elasticbeanstalk/config.yml file
-    Add deploy:
-            artifact: ./www/Archive.zip to achieve the code for deployment
+Modify the .elasticbeanstalk/config.yml file to achieve the code for deployment
 
-`eb create` creates a  new environment for the app
+```yml
 
-`eb deploy` used to push changes after deployment from dev local.
+deploy:
+    artifact: ./www/Archive.zip
+
+```
+
+`eb create` : creates a  new environment for the app
+
+`eb deploy` : used to push changes after deployment from dev local.
 
 ### Testing
 
 #### Before Deployment
-`npm run dev` to run in dev mode
+
+`npm run dev`  : to run in dev mode
     Use postman to test the endpoint by giving a link
-    E.g
+    [Example](http://localhost:8082/filteredimage?image_url=https://zimbabwetourism.net/wp-content/uploads/2021/10/Mukuvisi-Woodlands-3-770x550.jpg)
     `http://localhost:8082/filteredimage?image_url=https://zimbabwetourism.net/wp-content/uploads/2021/10/Mukuvisi-Woodlands-3-770x550.jpg`
 
 #### After Deployment
 
 Use Postman to test the endpoint of the elasticbeanstalk app deployed.
-    E.g 
+    [Example](http://udagram-lashie-image-filter-dev.us-east-1.elasticbeanstalk.com/filteredimage?image_url=https://zimbabwetourism.net/wp-content/uploads/2021/10/Mukuvisi-Woodlands-3-770x550.jpg)
     `http://udagram-lashie-image-filter-dev.us-east-1.elasticbeanstalk.com/filteredimage?image_url=https://zimbabwetourism.net/wp-content/uploads/2021/10/Mukuvisi-Woodlands-3-770x550.jpg`
 
